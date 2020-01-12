@@ -39,5 +39,29 @@ public class MainController {
         return userService.select();
     }
 
+    @RequestMapping(value = "/03")
+    public String queryFromDS() {
+        DataSourceInfo dataSourceInfo = new DataSourceInfo("ds01",
+                "com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/datasource01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
+                "root",
+                "yeecode");
+        dynamicDataSource.addDataSource(dataSourceInfo);
+        dynamicDataSource.switchDataSource("ds01");
+        String out = userService.select();
+
+
+        dataSourceInfo = new DataSourceInfo("ds02",
+                "com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/datasource02?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
+                "root",
+                "yeecode");
+        dynamicDataSource.addDataSource(dataSourceInfo);
+        dynamicDataSource.switchDataSource("ds02");
+        out += "<br>";
+        out += userService.select();
+        return out;
+    }
+
 
 }
