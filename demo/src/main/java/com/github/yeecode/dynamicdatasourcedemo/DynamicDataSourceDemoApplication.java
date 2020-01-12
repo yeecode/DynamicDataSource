@@ -7,10 +7,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@MapperScan("com.github.yeecode.dynamicdatasourcedemo")
+@MapperScan("com.github.yeecode.dynamicdatasourcedemo.business")
 @ComponentScan(basePackages = {"com.github.yeecode.dynamicdatasource","com.github.yeecode.dynamicdatasourcedemo"})
 public class DynamicDataSourceDemoApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(DynamicDataSourceDemoApplication.class, args);
         System.out.println(
