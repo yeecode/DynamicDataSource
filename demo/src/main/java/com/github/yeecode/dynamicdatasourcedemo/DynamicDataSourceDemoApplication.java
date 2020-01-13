@@ -22,5 +22,10 @@ public class DynamicDataSourceDemoApplication {
                         " |_____/ \\__, |_| |_|\\__,_|_| |_| |_|_|\\___|_____/ \\__,_|\\__\\__,_|_____/ \\___/ \\__,_|_|  \\___\\___|\n" +
                         "          __/ |                                                                                   \n" +
                         "         |___/                                                                                    \n");
+        System.out.println("**************************************************");
+        System.out.println("Via http://127.0.0.1:12301/01 to query information from datasource01");
+        System.out.println("Via http://127.0.0.1:12301/02 to query information from datasource02");
+        System.out.println("Via http://127.0.0.1:12301 to query information from datasource01 and datasource02 at the same time.");
+        System.out.println("**************************************************");
     }
 }

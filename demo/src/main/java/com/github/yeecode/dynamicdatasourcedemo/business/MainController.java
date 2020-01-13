@@ -39,7 +39,7 @@ public class MainController {
         return userService.select();
     }
 
-    @RequestMapping(value = "/03")
+    @RequestMapping(value = "/")
     public String queryFromDS() {
         DataSourceInfo dataSourceInfo = new DataSourceInfo("ds01",
                 "com.mysql.cj.jdbc.Driver",

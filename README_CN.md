@@ -12,6 +12,10 @@ DynamicDataSource是一个让你在程序运行过程中动态增删和切换数
 
 ---
 
+[English Introduction](./README.md)
+
+---
+
 在程序运行过程中进行数据源的切换、增删是一种很常见的需求。它广泛应用在分库应用、读写分离应用、多租户应用等众多应用中。DynamicDataSource使得我们可以便捷地完成这一过程。
 
 # 1 特点
@@ -23,7 +27,7 @@ DynamicDataSource具有以下特点：
 - 兼容：增加数据源时，数据源信息可以来自配置文件、前端界面输入、数据库查询等各种方式。
 - 无侵入：切换数据源操作可以由切面触发、逻辑触发、注解触发等，均可以供开发者自由实现。
 
-DynamicDataSource中常用的方法有以下三个方法：
+DynamicDataSource中常用的方法有以下三个：
 
 - `boolean addDataSource(DataSourceInfo dataSourceInfo)`：增加一个数据源
 - `void delDataSource(String dataSourceName)`：删除一个数据源
@@ -78,7 +82,7 @@ dynamicDataSource.default.driverClassName={dirver}
 
 启动DynamicDataSourceDemo项目得到如下界面。
 
-![]()
+![运行界面](./pic/demo.png)
 
 例如我们可以在一个接口内实现数据源的切换，从而在请求到达`/`接口时，先后查询了两个数据源中的数据，如代码所示。
 
@@ -110,6 +114,6 @@ public String queryFromDS() {
 
 可以得到下图所示的结果。下图打印的两行语句分别来自两个数据源。
 
-![图]()
+![查询结果](./pic/web.png)
 
 数据源新增、删除、切换操作可以在切面中、业务逻辑中、注解中等各处进行触发。DynamicDataSource不做任何限制，交由开发人员按照实际需要实现。
