@@ -26,8 +26,7 @@ DynamicDataSource has the following characteristics:
 - Basic : Only the most basic data source addition, deletion, and switching functions are implemented, without involving related services.
 - Easy To Use : All it takes is a simple configuration and a few method calls.
 - Strong Compatibility : When adding a data source, the data source information can come from various methods such as configuration files, web, and database.
-- 
-Low Coupling : The operation of switching data sources can be triggered by aspects, logic, and annotations, etc., which can be freely implemented by developers.
+- Low Coupling : The operation of switching data sources can be triggered by aspects, logic, and annotations, etc., which can be freely implemented by developers.
 
 There are three commonly used methods in DynamicDataSource:
 
@@ -39,12 +38,11 @@ You can call the above methods in aspects, operation logic, and annotations to c
 
 # 2 Get Started
 
-Provide a sample project under the `\ demo` folder for everyone to get started quickly. 
+Provide a sample project under the `\demo` folder for everyone to get started quickly. 
 
 Taking this demo project as an example, we introduce the use of DynamicDataSource.
 
-## 2.1 
-Introducing Dependencies
+## 2.1 Introducing Dependencies
 
 Introduce the jar package of DynamicDataSource in the POM file.
 
@@ -58,7 +56,7 @@ Introduce the jar package of DynamicDataSource in the POM file.
 
 ## 2.2 Configuration
 
-在application.properties文件中写入默认的数据源信息，下面为示例。可按照自己的数据源进行修改。
+Write the default data source information in the `application.properties` file, the following is an example. You can modify it according to your own data source.
 
 ```
 dynamicDataSource.default.url=jdbc:{db}://{pi}:{port}/{database_name}
@@ -79,12 +77,11 @@ Added scanning for beans in the package where the DynamicDataSource is located.
 @ComponentScan(basePackages = {"com.github.yeecode.dynamicdatasource","{other_package_root}"})
 ```
 
-## 2.3 
-Start Using
+## 2.3 Start Using
 
 At this point, all the configuration required to use DynamicDataSource is complete.
 
-We can set up two data sources as described in the `\ demo \ sql \ DDL.md` file, and then test the working of the DynamicDataSource.
+We can set up two data sources as described in the `\demo\sql\DDL.md` file, and then test the working of the DynamicDataSource.
 
 Start the DynamicDataSourceDemo project to get the following interface.
 
