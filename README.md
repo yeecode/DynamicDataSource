@@ -81,6 +81,13 @@ Added scanning for beans in the package where the DynamicDataSource is located.
 
 At this point, all the configuration required to use DynamicDataSource is complete.
 
+We can use `@Autowired` to get DynamicDataSource.
+
+```
+@Autowired
+private DynamicDataSource dynamicDataSource;
+```
+
 We can set up two data sources as described in the `\demo\sql\DDL.md` file, and then test the working of the DynamicDataSource.
 
 Start the DynamicDataSourceDemo project to get the following interface.

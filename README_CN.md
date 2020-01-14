@@ -76,7 +76,12 @@ dynamicDataSource.default.driverClassName={dirver}
 
 ## 2.3 开始使用
 
-至此，使用DynamicDataSource所需的全部配置就完成了。
+至此，使用DynamicDataSource所需的全部配置就完成了。使用下面方式注入DynamicDataSource后便可以调用其中的数据源操作方法。
+
+```
+@Autowired
+private DynamicDataSource dynamicDataSource;
+```
 
 我们可以按照`\demo\sql\DDL.md`文件所述建立两个数据源，然后测试DynamicDataSource的工作情况。
 
