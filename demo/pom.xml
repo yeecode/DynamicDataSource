@@ -5,10 +5,9 @@
     <parent>
         <groupId>com.github.yeecode.dynamicdatasource</groupId>
         <artifactId>DynamicDataSourceParent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <artifactId>DynamicDataSourceDemo</artifactId>
-    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

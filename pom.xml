@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.yeecode.dynamicdatasource</groupId>
     <artifactId>DynamicDataSourceParent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <modules>
         <module>client</module>
@@ -28,8 +28,10 @@
         <developerConnection>scm:git:git@github.com/yeecode/DynamicDataSource.git</developerConnection>
         <url>git@github.com/yeecode/DynamicDataSource.git</url>
     </scm>
-    <description>A tool that allows you to add, delete, and switch data sources while the program is running.</description>
+    <description>A tool that allows you to add, delete, and switch data sources while the program is running.
+    </description>
     <packaging>pom</packaging>
+    <name>DynamicDataSource</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -114,6 +116,17 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.7.1</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-project-info-reports-plugin</artifactId>
+                        <version>3.0.0</version>
+                    </plugin>
+
                     <!-- Javadoc -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -156,32 +169,4 @@
             </distributionManagement>
         </profile>
     </profiles>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.0.0</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>index</report>
-                            <report>licenses</report>
-                            <report>dependency-info</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-            </plugin>
-        </plugins>
-    </build>
 </project>
