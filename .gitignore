@@ -2,8 +2,7 @@ HELP.md
 /target/*
 /*/target/*
 /*/*/target/*
-!DynamicDataSource-*.jar
-!DynamicDataSourceDemo-*.jar
+!DynamicDataSource*.jar
 !*/*.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
