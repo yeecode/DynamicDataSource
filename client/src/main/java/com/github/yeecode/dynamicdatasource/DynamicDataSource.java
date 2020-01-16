@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DynamicDataSource extends AbstractRoutingDataSource {
-    // current datasource of this thread
     private static final ThreadLocal<String> CURRENT_DATASOURCE_NAME = new ThreadLocal<String>();
     private ConcurrentHashMap<Object, Object> dataSourcesMap = new ConcurrentHashMap<Object, Object>();
     private DataSource defaultDataSource;
@@ -17,6 +16,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     public DynamicDataSource(DataSource defaultDataSource) {
         super.setDefaultTargetDataSource(defaultDataSource);
         super.setTargetDataSources(dataSourcesMap);
+        this.defaultDataSource = defaultDataSource;
     }
 
     @Override
@@ -25,13 +25,14 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     }
 
     /**
-     * add new datasource
-     * @param dataSourceInfo datasource info to create new database
-     * @return operation succeeded or failed
+     * Add a new datasource
+     *
+     * @param dataSourceInfo Datasource info to create new datasource
+     * @param overwrite      Whether to allow overwriting if a datasource with the same name already exists
+     * @return Whether the new datasource has been added
      */
-    public synchronized boolean addDataSource(DataSourceInfo dataSourceInfo) {
-        //The new data source does not overwrite the old data source with the same name
-        if (dataSourcesMap.containsKey(dataSourceInfo.getName())) {
+    public synchronized boolean addDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite) {
+        if (dataSourcesMap.containsKey(dataSourceInfo.getName()) && !overwrite) {
             return false;
         } else {
             DataSource dataSource = DynamicDataSourceConfig.createDataSource(dataSourceInfo);
@@ -42,21 +43,32 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     }
 
     /**
-     * del one datasource by name
-     * @param dataSourceName the name of datasource to be deleted
+     * Add a new datasource and switch to it
+     *
+     * @param dataSourceInfo Datasource info to create new database
+     * @param overwrite      If a datasource with the same name already exists, whether to allow overwriting before switching.
+     * @return Whether the new datasource is added and enabled
      */
-    public synchronized void delDataSource(String dataSourceName) {
-        if (dataSourcesMap.containsKey(dataSourceName)) {
-            dataSourcesMap.remove(dataSourceName);
+    public synchronized boolean addAndSwitchDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite) {
+        if (dataSourcesMap.containsKey(dataSourceInfo.getName()) && !overwrite) {
+            CURRENT_DATASOURCE_NAME.set(dataSourceInfo.getName());
+            return false;
+        } else {
+            DataSource dataSource = DynamicDataSourceConfig.createDataSource(dataSourceInfo);
+            dataSourcesMap.put(dataSourceInfo.getName(), dataSource);
+            super.afterPropertiesSet();
+            CURRENT_DATASOURCE_NAME.set(dataSourceInfo.getName());
+            return true;
         }
     }
 
     /**
-     * switch to a datasource
-     * @param dataSourceName  the name of the data source to be switched to
-     * @return operation succeeded or failed
+     * Switch to a datasource
+     *
+     * @param dataSourceName The name of the data source to be switched to
+     * @return Whether to switch to the specified datasource
      */
-    public boolean switchDataSource(String dataSourceName) {
+    public synchronized boolean switchDataSource(String dataSourceName) {
         if (!dataSourcesMap.containsKey(dataSourceName)) {
             return false;
         }
@@ -65,17 +77,23 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     }
 
     /**
-     * set default dataSource
-     * @param dataSourceInfo default datasource info
+     * Del a datasource by name. If the specified data source is in use, deletion is not allowed.
+     *
+     * @param dataSourceName The name of datasource to be deleted
+     * @return Whether the data source was successfully deleted
      */
-    public void setDefaultDataSource(DataSourceInfo dataSourceInfo) {
-        addDataSource(dataSourceInfo);
-        defaultDataSource = (DataSource) dataSourcesMap.get(dataSourceInfo.getName());
-        super.setDefaultTargetDataSource(defaultDataSource);
+    public synchronized boolean delDataSource(String dataSourceName) {
+        if (CURRENT_DATASOURCE_NAME.get().equals(dataSourceName)) {
+            return false;
+        } else {
+            dataSourcesMap.remove(dataSourceName);
+            return true;
+        }
     }
 
     /**
-     * get default datasource
+     * Get default datasource
+     *
      * @return default datasource
      */
     public DataSource getDefaultDataSource() {

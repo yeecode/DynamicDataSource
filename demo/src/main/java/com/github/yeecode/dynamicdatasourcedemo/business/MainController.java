@@ -22,7 +22,7 @@ public class MainController {
                 "jdbc:mysql://localhost:3306/datasource01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
                 "root",
                 "yeecode");
-        dynamicDataSource.addDataSource(dataSourceInfo);
+        dynamicDataSource.addDataSource(dataSourceInfo, true);
         dynamicDataSource.switchDataSource("ds01");
         return userService.select();
     }
@@ -34,8 +34,7 @@ public class MainController {
                 "jdbc:mysql://localhost:3306/datasource02?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
                 "root",
                 "yeecode");
-        dynamicDataSource.addDataSource(dataSourceInfo);
-        dynamicDataSource.switchDataSource("ds02");
+        dynamicDataSource.addAndSwitchDataSource(dataSourceInfo, true);
         return userService.select();
     }
 
@@ -46,22 +45,17 @@ public class MainController {
                 "jdbc:mysql://localhost:3306/datasource01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
                 "root",
                 "yeecode");
-        dynamicDataSource.addDataSource(dataSourceInfo);
-        dynamicDataSource.switchDataSource("ds01");
+        dynamicDataSource.addAndSwitchDataSource(dataSourceInfo,true);
         String out = userService.select();
-
 
         dataSourceInfo = new DataSourceInfo("ds02",
                 "com.mysql.cj.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/datasource02?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
                 "root",
                 "yeecode");
-        dynamicDataSource.addDataSource(dataSourceInfo);
-        dynamicDataSource.switchDataSource("ds02");
+        dynamicDataSource.addAndSwitchDataSource(dataSourceInfo,true);
         out += "<br>";
         out += userService.select();
         return out;
     }
-
-
 }

@@ -28,13 +28,15 @@ DynamicDataSource has the following characteristics:
 - Strong Compatibility : When adding a data source, the data source information can come from various methods such as configuration files, web, and database.
 - Low Coupling : The operation of switching data sources can be triggered by aspects, logic, and annotations, etc., which can be freely implemented by developers.
 
-There are three commonly used methods in DynamicDataSource:
+There are commonly used methods in DynamicDataSource:
 
-- `boolean addDataSource(DataSourceInfo dataSourceInfo)`：Adding a data source
-- `void delDataSource(String dataSourceName)`：Delete a data source
+- `boolean addDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite)`：Add a data source, overwrite is used to determine whether to overwrite if a data source with the same name already exists
+- `boolean addAndSwitchDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite)`：Add a data source and switch to the data source. Overwrite is used to determine whether to overwrite if a data source with the same name already exists
 - `boolean switchDataSource(String dataSourceName)`：Switch to the data source with the specified name
+- `boolean delDataSource(String dataSourceName)`：Delete a data source
+- `DataSource getDefaultDataSource()`：Get the default data source
 
-You can call the above methods in aspects, operation logic, and annotations to complete the dynamic addition, deletion, and switching of data sources.
+The above methods are multi-thread safe. You can call the above methods in aspects, operation logic, and annotations to complete the dynamic addition, deletion, and switching of data sources.
 
 # 2 Get Started
 
@@ -104,18 +106,15 @@ public String queryFromDS() {
             "jdbc:mysql://localhost:3306/datasource01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
             "root",
             "yeecode");
-    dynamicDataSource.addDataSource(dataSourceInfo);
-    dynamicDataSource.switchDataSource("ds01");
+    dynamicDataSource.addAndSwitchDataSource(dataSourceInfo,true);
     String out = userService.select();
-
 
     dataSourceInfo = new DataSourceInfo("ds02",
             "com.mysql.cj.jdbc.Driver",
             "jdbc:mysql://localhost:3306/datasource02?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
             "root",
             "yeecode");
-    dynamicDataSource.addDataSource(dataSourceInfo);
-    dynamicDataSource.switchDataSource("ds02");
+    dynamicDataSource.addAndSwitchDataSource(dataSourceInfo,true);
     out += "<br>";
     out += userService.select();
     return out;

@@ -27,13 +27,15 @@ DynamicDataSource具有以下特点：
 - 兼容：增加数据源时，数据源信息可以来自配置文件、前端界面输入、数据库查询等各种方式。
 - 无侵入：切换数据源操作可以由切面触发、逻辑触发、注解触发等，均可以供开发者自由实现。
 
-DynamicDataSource中常用的方法有以下三个：
+DynamicDataSource中常用的方法有：
 
-- `boolean addDataSource(DataSourceInfo dataSourceInfo)`：增加一个数据源
-- `void delDataSource(String dataSourceName)`：删除一个数据源
+- `boolean addDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite)`：增加一个数据源，overwrite用来决定如果已经存在同名数据源时是否要覆盖
+- `boolean addAndSwitchDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite)`：增加一个数据源并切换到该数据源，overwrite用来决定如果已经存在同名数据源时是否要覆盖
 - `boolean switchDataSource(String dataSourceName)`：切换到指定名称的数据源
+- `boolean delDataSource(String dataSourceName)`：删除一个数据源
+- `DataSource getDefaultDataSource()`：获取默认数据源
 
-你可以在切面、操作逻辑、注解中调用以上方法，完成数据源的动态增删与切换。
+以上方法都是多线程安全的。你可以在切面、操作逻辑、注解中调用以上方法，完成数据源的动态增删与切换。
 
 # 2 快速上手
 
@@ -99,18 +101,15 @@ public String queryFromDS() {
             "jdbc:mysql://localhost:3306/datasource01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
             "root",
             "yeecode");
-    dynamicDataSource.addDataSource(dataSourceInfo);
-    dynamicDataSource.switchDataSource("ds01");
+    dynamicDataSource.addAndSwitchDataSource(dataSourceInfo,true);
     String out = userService.select();
-
 
     dataSourceInfo = new DataSourceInfo("ds02",
             "com.mysql.cj.jdbc.Driver",
             "jdbc:mysql://localhost:3306/datasource02?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8",
             "root",
             "yeecode");
-    dynamicDataSource.addDataSource(dataSourceInfo);
-    dynamicDataSource.switchDataSource("ds02");
+    dynamicDataSource.addAndSwitchDataSource(dataSourceInfo,true);
     out += "<br>";
     out += userService.select();
     return out;
