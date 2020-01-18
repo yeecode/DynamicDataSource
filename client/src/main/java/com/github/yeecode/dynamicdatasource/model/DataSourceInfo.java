@@ -1,6 +1,8 @@
 package com.github.yeecode.dynamicdatasource.model;
 
 
+import javax.sql.DataSource;
+
 public class DataSourceInfo {
     private String name;
     private String driverClassName;
@@ -54,5 +56,23 @@ public class DataSourceInfo {
 
     public void setDriverClassName(String driverClassName) {
         this.driverClassName = driverClassName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof DataSourceInfo) {
+            DataSourceInfo other = (DataSourceInfo) obj;
+            return equalString(this.name, other.getName()) &&
+                    equalString(this.driverClassName, other.getDriverClassName()) &&
+                    equalString(this.url, other.getUrl()) &&
+                    equalString(this.userName, other.getUserName()) &&
+                    equalString(this.password, other.getPassword());
+        } else {
+            return false;
+        }
+    }
+
+    private boolean equalString(String a, String b) {
+        return (a != null && a.equals(b)) || (a == null && b == null);
     }
 }
