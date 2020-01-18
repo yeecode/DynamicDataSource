@@ -4,7 +4,7 @@
 
 # [DynamicDataSource](https://github.com/yeecode/DynamicDataSource)
 ![language](https://img.shields.io/badge/language-java-green.svg)
-![version](https://img.shields.io/badge/mvn-0.0.1-blue.svg?style=flat)
+![version](https://img.shields.io/badge/mvn-1.3.2-blue.svg?style=flat)
 ![license](https://img.shields.io/badge/license-Apache-brightgreen.svg)
 
 
