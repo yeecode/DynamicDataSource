@@ -34,6 +34,7 @@ There are commonly used methods in DynamicDataSource:
 - `boolean addAndSwitchDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite)`：Add a data source and switch to the data source. Overwrite is used to determine whether to overwrite if a data source with the same name already exists
 - `boolean switchDataSource(String dataSourceName)`：Switch to the data source with the specified name
 - `boolean delDataSource(String dataSourceName)`：Delete a data source
+- `void switchDefaultDataSource()`：Switch to the default data source
 - `DataSource getDefaultDataSource()`：Get the default data source
 
 The above methods are multi-thread safe. You can call the above methods in aspects, operation logic, and annotations to complete the dynamic addition, deletion, and switching of data sources.

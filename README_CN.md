@@ -33,6 +33,7 @@ DynamicDataSource中常用的方法有：
 - `boolean addAndSwitchDataSource(DataSourceInfo dataSourceInfo, Boolean overwrite)`：增加一个数据源并切换到该数据源，overwrite用来决定如果已经存在同名数据源时是否要覆盖
 - `boolean switchDataSource(String dataSourceName)`：切换到指定名称的数据源
 - `boolean delDataSource(String dataSourceName)`：删除一个数据源
+- `void switchDefaultDataSource()`：切换到默认的数据源
 - `DataSource getDefaultDataSource()`：获取默认数据源
 
 以上方法都是多线程安全的。你可以在切面、操作逻辑、注解中调用以上方法，完成数据源的动态增删与切换。
