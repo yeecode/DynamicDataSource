@@ -1,5 +1,5 @@
 <div align="left">
-<img src="./pic/logo.png" height="80px" alt="DynamicDataSource" >
+<img src="./pic/logo.png" height="100px" alt="DynamicDataSource" >
 </div>
 
 # [DynamicDataSource](https://github.com/yeecode/DynamicDataSource)
